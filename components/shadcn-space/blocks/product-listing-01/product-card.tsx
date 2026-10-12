@@ -70,7 +70,10 @@ export function ProductCard({
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    if (sizes && sizes.length > 1 && slug) { router.push(`/shop/${slug}`); return }
+    if (sizes && sizes.length > 1 && slug) {
+      router.push(`/shop/${slug}`)
+      return
+    }
     addItem({
       id: sizes?.[0]?.id || id || slug || name,
       name,
@@ -135,12 +138,12 @@ export function ProductCard({
         <img
           src={image}
           alt={name}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          className="h-full w-full object-contain object-center p-3"
         />
       </Link>
       <CardContent className="flex flex-col gap-3 px-1 py-4 text-center sm:text-left">
         <div className="flex flex-col gap-2">
-          <span className="text-xs uppercase tracking-widest text-muted-foreground">
+          <span className="text-xs tracking-widest text-muted-foreground uppercase">
             {subcategory || category}
           </span>
           <Link href={slug ? `/shop/${slug}` : "#"}>
@@ -148,23 +151,27 @@ export function ProductCard({
               {name}
             </p>
           </Link>
-          {reviews > 0 && <div className="flex items-center gap-2">
-            <div className="flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={cn(
-                    "h-3.5 w-3.5",
-                    i < Math.floor(rating)
-                      ? "fill-orange-400 text-orange-400"
-                      : "fill-muted text-orange-400"
-                  )}
-                />
-              ))}
+          {reviews > 0 && (
+            <div className="flex items-center gap-2">
+              <div className="flex items-center">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={cn(
+                      "h-3.5 w-3.5",
+                      i < Math.floor(rating)
+                        ? "fill-orange-400 text-orange-400"
+                        : "fill-muted text-orange-400"
+                    )}
+                  />
+                ))}
+              </div>
+              <small className="text-sm text-foreground">
+                {reviews > 0 ? rating : "New"}
+              </small>
+              <small className="text-sm text-foreground">({reviews})</small>
             </div>
-            <small className="text-sm text-foreground">{reviews > 0 ? rating : "New"}</small>
-            <small className="text-sm text-foreground">({reviews})</small>
-          </div>}
+          )}
           <div className="flex items-center gap-2">
             <small className="text-sm font-medium text-foreground">
               {formatPrice(price)}
@@ -179,14 +186,14 @@ export function ProductCard({
         <div className="flex gap-2">
           <Button
             onClick={handleAddToCart}
-            className="h-9 rounded-none flex-1 cursor-pointer gap-2 transition-all hover:bg-primary/80 active:scale-95"
+            className="h-9 flex-1 cursor-pointer gap-2 rounded-none transition-all hover:bg-primary/80 active:scale-95"
           >
             {sizes && sizes.length > 1 ? "Choose options" : "Add to Cart"}
           </Button>
           <Button
             variant="outline"
             size="icon"
-            className="h-9 w-9 rounded-none cursor-pointer transition-all duration-300 active:scale-95"
+            className="h-9 w-9 cursor-pointer rounded-none transition-all duration-300 active:scale-95"
           >
             <Link href={slug ? `/shop/${slug}` : "#"} className="group">
               <ArrowUpRight className="size-4 transition-all duration-300 group-hover:rotate-45" />

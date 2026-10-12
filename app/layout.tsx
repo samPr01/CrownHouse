@@ -6,6 +6,9 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import { CartProvider } from "@/components/cart-context"
 import { WishlistProvider } from "@/components/wishlist-context"
+import Header from "@/components/shadcn-space/blocks/hero-01/header"
+import Footer from "@/components/shadcn-space/blocks/footer-01/footer"
+import { AnnouncementBar } from "@/components/announcement-bar"
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_URL || "http://localhost:3003"),
@@ -13,7 +16,8 @@ export const metadata: Metadata = {
   description:
     "CrownHouse — Simply Beyond. Discover considered fashion clothing for women.",
   icons: { icon: "/brand/crownhouse-monogram.jpeg" },
-  keywords: "CrownHouse, Simply Beyond, womenswear, women empowerment, clothing",
+  keywords:
+    "CrownHouse, Simply Beyond, womenswear, women empowerment, clothing",
   openGraph: {
     title: "CrownHouse | Simply Beyond",
     description:
@@ -49,7 +53,21 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <CartProvider>
-            <WishlistProvider>{children}</WishlistProvider>
+            <WishlistProvider>
+              <div className="flex min-h-screen flex-col">
+                <AnnouncementBar />
+                <Header
+                  navigationData={[
+                    { title: "Home", href: "/" },
+                    { title: "Shop", href: "/shop" },
+                    { title: "About", href: "/about" },
+                    { title: "Contact", href: "/contact" },
+                  ]}
+                />
+                <div className="flex-1">{children}</div>
+                <Footer />
+              </div>
+            </WishlistProvider>
           </CartProvider>
         </ThemeProvider>
       </body>
