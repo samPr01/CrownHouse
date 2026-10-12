@@ -1,0 +1,4 @@
+{
+  "buildCommand": "npm run deploy:check && npm run build",
+  "crons": [{"path": "/api/internal/order-emails", "schedule": "0 3 * * *"}]
+}

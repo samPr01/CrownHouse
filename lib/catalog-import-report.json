@@ -1,0 +1,33 @@
+{
+  "sourceProducts": 314,
+  "imported": 313,
+  "variants": 1185,
+  "categories": {
+    "Accessories / Bags": 43,
+    "Footwear / Heels & Flats": 29,
+    "Footwear / Casual Shoes": 37,
+    "Footwear / Flip Flops": 10,
+    "Clothing / Joggers & Shorts": 24,
+    "Clothing / Tops": 77,
+    "Clothing / Jeans": 27,
+    "Clothing / Shirts": 26,
+    "Clothing / Trousers & Leggings": 6,
+    "Clothing / Skirts": 4,
+    "Clothing / Dresses": 3,
+    "Ethnics / Kurti": 9,
+    "Ethnics / Ethnic Suits Collection": 12,
+    "Clothing / T-Shirts": 6
+  },
+  "excluded": [
+    {
+      "handle": "men-sneakers-for-running-walking-gym-party-sneakers-for",
+      "reason": "Explicitly menswear title"
+    }
+  ],
+  "notes": [
+    "Currency INR inferred from supplied store screenshots.",
+    "Inventory quantities are absent from the export; no stock levels are fabricated.",
+    "Images remain at their supplied Shopify CDN URLs.",
+    "Classification uses titles to correct mismatched source types."
+  ]
+}

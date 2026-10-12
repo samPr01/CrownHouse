@@ -1,0 +1,2 @@
+import Link from "next/link"
+export default function FAQ(){return <section className="mx-auto max-w-3xl space-y-5 px-5 py-12 text-center"><h2 className="text-3xl">A little help with your order</h2><p>Cash on delivery only. Delivery is ₹99 below ₹599 and free from ₹599. Contact us to confirm delivery timing and returns eligibility.</p><Link href="/faq" className="underline">View all FAQs</Link></section>}

@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791741700423,
+      "tag": "0000_commerce_foundation",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791743130635,
+      "tag": "0001_order_email_delivery",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791744055139,
+      "tag": "0002_customer_accounts",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791778681884,
+      "tag": "0003_clumsy_pepper_potts",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791779208659,
+      "tag": "0004_merchant_runtime_grants",
+      "breakpoints": true
+    }
+  ]
+}
