@@ -14,6 +14,8 @@ type Quote = {
     quantity: number
     name: string
     unitPriceMinor: number
+    sku?: string
+    options?: Record<string, string>
   }[]
 }
 export default function CheckoutClient({
@@ -28,7 +30,7 @@ export default function CheckoutClient({
     addresses: SavedAddress[]
   } | null
 }) {
-  const { items, clearCart } = useCart()
+  const { items, clearCart, updateQuantity, removeItem, itemCount } = useCart()
   const [summary, setSummary] = useState<{ cart: string; quote: Quote } | null>(
     null
   )
@@ -171,7 +173,10 @@ export default function CheckoutClient({
         <p>Your bag is empty.</p>
       ) : (
         <div className="grid gap-10 md:grid-cols-2">
-          <form onSubmit={submit} className="space-y-5">
+          <form
+            onSubmit={submit}
+            className="order-2 min-w-0 space-y-5 md:order-1"
+          >
             {!account && (
               <p>
                 <Link
@@ -322,17 +327,120 @@ export default function CheckoutClient({
           </form>
           <aside
             aria-label="Order summary"
-            className="space-y-5 self-start border p-6"
+            className="order-1 min-w-0 space-y-5 self-start border p-5 sm:p-6 md:order-2"
           >
-            <h2 className="text-2xl">Order summary</h2>
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="text-2xl">Your bag</h2>
+              <span className="text-sm text-muted-foreground">
+                {itemCount} {itemCount === 1 ? "item" : "items"}
+              </span>
+            </div>
+            <ul className="divide-y divide-border">
+              {items.map((item) => {
+                const line = quote?.lines.find(
+                  (line) => line.variantId === item.id
+                )
+                const details = Object.entries(line?.options || {})
+                  .map(([key, value]) => `${key}: ${value}`)
+                  .join(" · ")
+                return (
+                  <li key={item.id} className="flex gap-4 py-5 first:pt-0">
+                    <Link
+                      href={item.slug ? `/shop/${item.slug}` : "/shop"}
+                      className="h-28 w-20 shrink-0 overflow-hidden bg-muted sm:w-24"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={item.image}
+                        alt={line?.name || item.name}
+                        width={96}
+                        height={112}
+                        className="h-full w-full object-cover"
+                      />
+                    </Link>
+                    <div className="min-w-0 flex-1 space-y-2">
+                      <Link
+                        href={item.slug ? `/shop/${item.slug}` : "/shop"}
+                        className="block leading-snug font-medium break-words hover:underline"
+                      >
+                        {item.name}
+                      </Link>
+                      {details && (
+                        <p className="text-sm break-words text-muted-foreground">
+                          {details}
+                        </p>
+                      )}
+                      <p className="text-sm">
+                        {line
+                          ? `${formatPrice(line.unitPriceMinor / 100)} each`
+                          : "Checking price…"}
+                      </p>
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div
+                          role="group"
+                          aria-label={`Quantity for ${item.name}`}
+                          className="inline-flex items-center border border-border"
+                        >
+                          <button
+                            type="button"
+                            aria-label={`Decrease quantity for ${item.name}`}
+                            disabled={busy || item.quantity <= 1}
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity - 1)
+                            }
+                            className="flex size-10 items-center justify-center text-xl hover:bg-muted disabled:opacity-30"
+                          >
+                            −
+                          </button>
+                          <span
+                            aria-live="polite"
+                            className="min-w-8 text-center tabular-nums"
+                          >
+                            {item.quantity}
+                          </span>
+                          <button
+                            type="button"
+                            aria-label={`Increase quantity for ${item.name}`}
+                            disabled={busy || item.quantity >= 10}
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                            }
+                            className="flex size-10 items-center justify-center text-xl hover:bg-muted disabled:opacity-30"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <span className="font-semibold tabular-nums">
+                          {line
+                            ? formatPrice(
+                                (line.unitPriceMinor * item.quantity) / 100
+                              )
+                            : "—"}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        disabled={busy}
+                        aria-label={`Remove ${item.name} from bag`}
+                        onClick={() => removeItem(item.id)}
+                        className="min-h-10 text-sm underline underline-offset-4 disabled:opacity-40"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+            <Link
+              href="/shop"
+              className="inline-block text-sm underline underline-offset-4"
+            >
+              Continue shopping
+            </Link>
+            <h3 className="border-t pt-5 text-xl">Order summary</h3>
             {quote ? (
               <>
-                {quote.lines.map((line) => (
-                  <p key={line.variantId}>
-                    {line.name} × {line.quantity} —{" "}
-                    {formatPrice((line.unitPriceMinor * line.quantity) / 100)}
-                  </p>
-                ))}
                 <p>Subtotal: {formatPrice(quote.subtotalMinor / 100)}</p>
                 <p>Delivery: {formatPrice(quote.shippingMinor / 100)}</p>
                 <p className="font-semibold">
