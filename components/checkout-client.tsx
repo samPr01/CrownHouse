@@ -237,12 +237,47 @@ export default function CheckoutClient({
                   }
                   readOnly={field.name === "email" && Boolean(account)}
                   required={field.name !== "line2"}
-                  maxLength={field.name === "email" ? 254 : 200}
+                  minLength={
+                    field.name === "line1"
+                      ? 5
+                      : ["name", "city", "state"].includes(field.name)
+                        ? 2
+                        : undefined
+                  }
+                  maxLength={
+                    field.name === "email"
+                      ? 254
+                      : field.name === "name"
+                        ? 120
+                        : ["city", "state"].includes(field.name)
+                          ? 100
+                          : field.name === "phone"
+                            ? 16
+                            : field.name === "postalCode"
+                              ? 6
+                              : 200
+                  }
                   pattern={
-                    field.name === "postalCode" ? "[1-9][0-9]{5}" : undefined
+                    field.name === "postalCode"
+                      ? "[1-9][0-9]{5}"
+                      : field.name === "phone"
+                        ? "[+]?[0-9]{10,15}"
+                        : undefined
                   }
                   className="w-full border border-border bg-background p-3"
                 />
+                {field.name === "line1" && (
+                  <span className="mt-1 block text-sm">
+                    Include the building or street name, not just the house
+                    number.
+                  </span>
+                )}
+                {field.name === "phone" && (
+                  <span className="mt-1 block text-sm">
+                    Use 10–15 digits, optionally starting with +. No spaces or
+                    punctuation.
+                  </span>
+                )}
               </label>
             ))}
             <p>
