@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: crownhouse
+    runtime: node
+    plan: free
+    region: singapore
+    branch: main
+    buildCommand: npm ci && npm run deploy:check && npm run build
+    startCommand: npm run start -- --hostname 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: APP_ENV
+        value: production
+      - key: CHECKOUT_MODE
+        value: cod
+      - key: ADMIN_EMAILS
+        value: ecomcrownsolutions@gmail.com
+      - key: RATE_LIMIT_SECRET
+        generateValue: true
+      - key: APP_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+        sync: false

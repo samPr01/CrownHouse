@@ -1,6 +1,6 @@
 # CrownHouse deployment and operations
 
-Current implementation: local COD store with database-backed catalog, customer accounts, merchant tools and fulfilment. Domain and public deployment are deferred by the owner. Order-email activation is explicitly deferred.
+Current implementation: local COD store with database-backed catalog, customer accounts, merchant tools and fulfilment. Render Free is selected for initial hosting; the custom domain, authentication email setup and order-email activation are deferred by the owner. Public deployment still needs the Render account connection and environment configuration.
 
 ## Configuration already applied
 
@@ -19,7 +19,23 @@ Current implementation: local COD store with database-backed catalog, customer a
 4. **Hosting:** select/connect the hosting account and project. A provider subdomain can be used before buying the final domain. No deployment account credentials have been supplied and no public deployment has been made.
 5. **Store decisions:** confirm delivery areas/times, return eligibility/window/charges, product measurements, footwear sizing and invoice/tax presentation. Policy pages describe current functionality and explicitly defer unspecified terms; they are not a substitute for owner approval.
 
-## Deploy with Vercel
+## Deploy with Render Free (selected)
+
+Use a **Node web service**, not a static site: checkout, accounts and admin need the Next.js server. The root `render.yaml` defines the free service, Singapore region, Node 22, production settings and a generated rate-limit secret. It does not provision another database or a paid cron job.
+
+1. In Render, connect GitHub repository `samPr01/CrownHouse`, branch `main`. Use New → Blueprint to import `render.yaml`, or New → Web Service with the settings below.
+2. Build: `npm ci && npm run deploy:check && npm run build`. Start: `npm run start -- --hostname 0.0.0.0 --port $PORT`. Instance: Free. Health check: `/api/health`.
+3. Set `DATABASE_URL` to the existing restricted runtime connection, `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` from local configuration. Set `APP_URL` to the exact HTTPS Render service URL. Do not assume the service name guarantees an available hostname; use the URL assigned by Render. These variables must be present during the build.
+4. For manual service creation also set `NODE_VERSION=22`, `APP_ENV=production`, `CHECKOUT_MODE=cod`, `ADMIN_EMAILS=ecomcrownsolutions@gmail.com` and a randomly generated `RATE_LIMIT_SECRET` of at least 32 characters. Blueprint creation supplies these automatically.
+5. Do not upload `.env.local` wholesale. Keep migration credentials, database password, backup encryption key and restore credentials off the web service. Leave Resend credentials unset. `vercel.json` cron configuration does not run on Render; add a scheduler only when email delivery is enabled later.
+6. Update Supabase Site URL to the assigned HTTPS origin, and allow exact `/auth/callback`, `/auth/callback?next=/account`, `/auth/callback?next=/reset-password` and `/auth/confirm` URLs on that origin. Keep localhost callbacks for development. Email confirmation remains enabled; new customer signup/recovery emails remain pending SMTP setup.
+7. Verify `/api/health`, the storefront, signed-in admin, profile/address book and checkout on the public URL. Database migrations are already applied; do not automatically reseed or migrate in a web build.
+
+Render Free sleeps after 15 minutes without inbound traffic; the next request can take about a minute to start it. Free services have resource/usage limits and ephemeral local files. Orders and stock remain in Supabase, independent of web-service restarts. Keep backups off the service filesystem. See https://render.com/docs/free and https://render.com/docs/deploy-nextjs-app.
+
+To upgrade, change the service instance in Render and update `plan` in `render.yaml` to the matching paid plan ID before the next Blueprint sync. Keep the same service and database; no catalog migration is needed. A paid web instance does not upgrade Supabase, email delivery or backup arrangements.
+
+## Deploy with Vercel (alternative)
 
 Use a separate Supabase development/staging project for preview/testing and the intended production project for production. Do not send production customer data to test projects. Set a supported Node LTS runtime (for example Node 22) in project settings.
 
