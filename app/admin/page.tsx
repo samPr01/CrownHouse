@@ -6,6 +6,8 @@ import { requireAdmin } from "@/lib/server/admin"
 import { formatPrice } from "@/lib/money"
 import ActionForm from "@/components/action-form"
 import { returnStatus } from "./actions"
+import { loadAdminOrderItems } from "@/lib/server/admin-order-items"
+import OrderItemImage from "@/components/order-item-image"
 export default async function Page({
   searchParams,
 }: {
@@ -14,20 +16,27 @@ export default async function Page({
   await requireAdmin()
   const query = await searchParams
   const page = Math.max(1, Math.min(10000, Number(query.page) || 1))
-  const data = await withDatabase(async (tx) => ({
-    orders: await tx
+  const data = await withDatabase(async (tx) => {
+    const pageOrders = await tx
       .select()
       .from(orders)
       .where(query.status ? eq(orders.status, query.status) : undefined)
       .orderBy(desc(orders.createdAt))
       .limit(30)
-      .offset((page - 1) * 30),
-    returns: await tx
-      .select()
-      .from(returnRequests)
-      .orderBy(desc(returnRequests.createdAt))
-      .limit(50),
-  }))
+      .offset((page - 1) * 30)
+    return {
+      orders: pageOrders,
+      items: await loadAdminOrderItems(
+        tx,
+        pageOrders.map((order) => order.id)
+      ),
+      returns: await tx
+        .select()
+        .from(returnRequests)
+        .orderBy(desc(returnRequests.createdAt))
+        .limit(50),
+    }
+  })
   return (
     <div className="space-y-8">
       <h2 className="text-2xl">Orders</h2>
@@ -62,6 +71,23 @@ export default async function Page({
             {o.status} · {o.paymentMethod} · {o.paymentStatus} ·{" "}
             {formatPrice(o.totalMinor / 100)}
           </p>
+          <div className="flex flex-wrap gap-4 pt-2">
+            {data.items
+              .filter(({ item }) => item.orderId === o.id)
+              .map(({ item, image }) => (
+                <Link
+                  key={item.id}
+                  href={`/admin/orders/${o.id}`}
+                  className="flex max-w-sm min-w-0 items-center gap-3"
+                >
+                  <OrderItemImage src={image} name={item.name} />
+                  <span className="min-w-0 text-sm">
+                    {item.name}
+                    <span className="block">Quantity: {item.quantity}</span>
+                  </span>
+                </Link>
+              ))}
+          </div>
         </article>
       ))}
       <nav className="flex gap-5">

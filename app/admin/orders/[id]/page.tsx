@@ -2,7 +2,9 @@ import { notFound } from "next/navigation"
 import { eq } from "drizzle-orm"
 import { z } from "zod"
 import { withDatabase } from "@/lib/db/client"
-import { orders, orderItems, orderAddresses, shipments } from "@/lib/db/schema"
+import { orders, orderAddresses, shipments } from "@/lib/db/schema"
+import { loadAdminOrderItems } from "@/lib/server/admin-order-items"
+import OrderItemImage from "@/components/order-item-image"
 import { requireAdmin } from "@/lib/server/admin"
 import { formatPrice } from "@/lib/money"
 import { canTransition, orderStatuses } from "@/lib/fulfilment"
@@ -18,7 +20,7 @@ export default async function Page({
   if (!z.uuid().safeParse(id).success) notFound()
   const data = await withDatabase(async (tx) => ({
     order: (await tx.select().from(orders).where(eq(orders.id, id)))[0],
-    items: await tx.select().from(orderItems).where(eq(orderItems.orderId, id)),
+    items: await loadAdminOrderItems(tx, [id]),
     address: (
       await tx
         .select()
@@ -49,14 +51,21 @@ export default async function Page({
           .filter(Boolean)
           .join(", ")}
       </p>
-      {data.items.map((i) => (
-        <div key={i.id} className="border p-4">
-          <p>
-            {i.name} · {i.sku} · {JSON.stringify(i.options)}
-          </p>
-          <p>
-            {i.quantity} × {formatPrice(i.unitPriceMinor / 100)}
-          </p>
+      {data.items.map(({ item: i, image }) => (
+        <div key={i.id} className="flex gap-4 border p-4">
+          <OrderItemImage src={image} name={i.name} />
+          <div className="min-w-0 space-y-2">
+            <p>{i.name}</p>
+            <p className="text-sm">
+              SKU: {i.sku} ·{" "}
+              {Object.entries((i.options || {}) as Record<string, string>)
+                .map(([key, value]) => `${key}: ${value}`)
+                .join(" · ")}
+            </p>
+            <p>
+              {i.quantity} × {formatPrice(i.unitPriceMinor / 100)}
+            </p>
+          </div>
         </div>
       ))}
       <p>
