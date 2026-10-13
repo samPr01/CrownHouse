@@ -15,7 +15,7 @@ try {
     return {id,productId:p.id,name:v.name,sku:`CH-${createHash('sha256').update(id).digest('hex').slice(0,20).toUpperCase()}`,options:v.options || {},priceMinor:Math.round(v.price*100),compareAtMinor:v.originalPrice?Math.round(v.originalPrice*100):null,currency:"INR",position}
   }))
   const imageRows=PRODUCTS.flatMap(p=>[p.image,...(p.details||[])].map((url,position)=>({productId:p.id,url,alt:p.name,position})))
-  if(productRows.length!==141 || variantRows.length!==460 || variantRows.some(v=>v.priceMinor<=0 || (v.compareAtMinor!==null && v.compareAtMinor<v.priceMinor))) throw new Error("Catalog validation failed; review import before proceeding")
+  if(productRows.length!==141 || variantRows.length!==525 || variantRows.some(v=>v.priceMinor<=0 || (v.compareAtMinor!==null && v.compareAtMinor<v.priceMinor))) throw new Error("Catalog validation failed; review import before proceeding")
   await db.transaction(async tx=>{
     await tx.insert(categories).values(categoryRows).onConflictDoUpdate({target:categories.id,set:{name:sql`excluded.name`,department:sql`excluded.department`,position:sql`excluded.position`}})
     await tx.insert(products).values(productRows).onConflictDoUpdate({target:products.id,set:{slug:sql`excluded.slug`,name:sql`excluded.name`,description:sql`excluded.description`,categoryId:sql`excluded.category_id`,details:sql`excluded.details`}})

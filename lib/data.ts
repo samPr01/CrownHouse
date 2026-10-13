@@ -309,6 +309,12 @@ function storefrontProduct(product: Product): Product {
   return {
     ...product,
     brand: undefined,
+    sizes: product.department === "Footwear" ? Array.from({ length: 6 }, (_, index) => {
+      const size = index + 5
+      const base = product.sizes?.[0]
+      if (!base) throw new Error("Footwear product is missing pricing")
+      return { ...base, id: `${product.id}-uk-${size}`, name: `UK ${size}`, options: { Size: `UK ${size}` } }
+    }) : product.sizes,
     name: clean(product.name),
     description: clean(product.description),
     accordionInfo: product.accordionInfo?.map(item => ({
