@@ -15,7 +15,6 @@ export const metadata: Metadata = {
   title: "CrownHouse | Simply Beyond",
   description:
     "CrownHouse — Simply Beyond. Discover considered fashion clothing for women.",
-  icons: { icon: "/brand/crownhouse-monogram.jpeg" },
   keywords:
     "CrownHouse, Simply Beyond, womenswear, women empowerment, clothing",
   openGraph: {
