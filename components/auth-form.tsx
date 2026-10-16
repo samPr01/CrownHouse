@@ -2,7 +2,6 @@
 import { useActionState } from "react"
 import Link from "next/link"
 import Logo from "@/assets/logo/logo"
-import ConfirmationForm from "./confirmation-form"
 import { login,register,forgotPassword,resetPassword,type AuthState } from "@/app/auth/actions"
 export default function AuthForm({mode,next="/account",notice}:{mode:"login"|"register"|"forgot"|"reset";next?:string;notice?:string}) {
   const action={login,register,forgot:forgotPassword,reset:resetPassword}[mode]
@@ -23,7 +22,6 @@ export default function AuthForm({mode,next="/account",notice}:{mode:"login"|"re
         {state.message && <p role="status">{state.message}</p>}
         <button disabled={pending} className="w-full bg-foreground px-4 py-3 text-background disabled:opacity-40">{pending?"Please wait…":{login:"Sign in",register:"Create account",forgot:"Send reset link",reset:"Update password"}[mode]}</button>
       </form>
-      {mode==="login"&&<ConfirmationForm/>}
       <div className="flex flex-wrap justify-center gap-5 text-sm underline underline-offset-4">
         {mode==="login"?<><Link href="/register">Create account</Link><Link href="/forgot-password">Forgot password?</Link></>:<Link href="/login">Back to sign in</Link>}
         <Link href="/shop">Continue shopping</Link>
