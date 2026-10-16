@@ -4,7 +4,7 @@ Current implementation: local COD store with database-backed catalog, customer a
 
 ## Configuration already applied
 
-- Admin allowlist: `ecomcrownsolutions@gmail.com`. Access requires a confirmed Supabase account; an email in this setting does not create an account.
+- Admin allowlist: server-only `ADMIN_EMAILS`, containing the existing confirmed owner login. Access requires a confirmed Supabase account; an email in this setting does not create an account.
 - Shipping: ₹99 below ₹599, free from ₹599. India-only checkout. `DELIVERY_PIN_CODES` optionally restricts accepted PIN codes.
 - Supabase Site URL: `http://localhost:3003`. Exact local callback URLs are saved for signup and recovery.
 - Nineteen private commerce tables with RLS, application grants and versioned migrations.
@@ -13,7 +13,7 @@ Current implementation: local COD store with database-backed catalog, customer a
 
 ## Remaining external setup
 
-1. **Owner login verified:** the owner account `ecomcrownsolutions@gmail.com` exists and is confirmed. Signed-in browser checks passed on 12 October 2026 for orders/returns, products, product editing forms, customers, messages and the account/profile/address-book page. Keep public email confirmation enabled. Repeat owner login verification on the production deployment.
+1. **Owner login verified:** the existing owner account is confirmed; changing the public support email does not change its login. Signed-in browser checks passed on 12 October 2026 for orders/returns, products, product editing forms, customers, messages and the account/profile/address-book page. Keep public email confirmation enabled. Repeat owner login verification on the production deployment.
 2. **Public signup/recovery emails:** configure Supabase custom SMTP with a verified sender. This is separate from application order emails. Public confirmation and password-reset delivery cannot be tested without it. Do not disable email confirmation to bypass sender setup.
 3. **Order emails:** deferred. Leave `RESEND_API_KEY` and `ORDER_EMAIL_FROM` empty. Stored jobs remain blocked; contact messages are available in `/admin/messages`. Adding SMTP to Supabase does not activate application order emails.
 4. **Hosting:** select/connect the hosting account and project. A provider subdomain can be used before buying the final domain. No deployment account credentials have been supplied and no public deployment has been made.
@@ -26,7 +26,7 @@ Use a **Node web service**, not a static site: checkout, accounts and admin need
 1. In Render, connect GitHub repository `samPr01/CrownHouse`, branch `main`. Use New → Blueprint to import `render.yaml`, or New → Web Service with the settings below.
 2. Build: `npm ci && npm run deploy:check && npm run build`. Start: `npm run start -- --hostname 0.0.0.0 --port $PORT`. Instance: Free. Health check: `/api/health`.
 3. Set `DATABASE_URL` to the existing restricted runtime connection, `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` from local configuration. Set `APP_URL` to the exact HTTPS Render service URL. Do not assume the service name guarantees an available hostname; use the URL assigned by Render. These variables must be present during the build.
-4. For manual service creation also set `NODE_VERSION=22`, `APP_ENV=production`, `CHECKOUT_MODE=cod`, `ADMIN_EMAILS=ecomcrownsolutions@gmail.com` and a randomly generated `RATE_LIMIT_SECRET` of at least 32 characters. Blueprint creation supplies these automatically.
+4. For manual service creation also set `NODE_VERSION=22`, `APP_ENV=production`, `CHECKOUT_MODE=cod`, `ADMIN_EMAILS=<existing-confirmed-owner-login>` and a randomly generated `RATE_LIMIT_SECRET` of at least 32 characters. Blueprint creation supplies these automatically.
 5. Do not upload `.env.local` wholesale. Keep migration credentials, database password, backup encryption key and restore credentials off the web service. Leave Resend credentials unset. `vercel.json` cron configuration does not run on Render; add a scheduler only when email delivery is enabled later.
 6. Update Supabase Site URL to the assigned HTTPS origin, and allow exact `/auth/callback`, `/auth/callback?next=/account`, `/auth/callback?next=/reset-password` and `/auth/confirm` URLs on that origin. Keep localhost callbacks for development. Email confirmation remains enabled; new customer signup/recovery emails remain pending SMTP setup.
 7. Verify `/api/health`, the storefront, signed-in admin, profile/address book and checkout on the public URL. Database migrations are already applied; do not automatically reseed or migrate in a web build.

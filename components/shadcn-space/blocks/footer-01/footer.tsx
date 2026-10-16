@@ -50,8 +50,8 @@ export default function Footer() {
       </nav>
       <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-4 border-t border-border px-5 py-5 text-center text-sm leading-6 text-muted-foreground sm:flex-row sm:px-10 sm:text-left lg:px-16">
         <span>
-          &copy; 2026 CrownHouse Owned &amp; Managed by ECOM CROWN (OPC) PVT.
-          LTD
+          &copy; 2026 CrownHouse Owned &amp; Managed by ECOMCROWN SOLUTIONS
+          (OPC) PVT. LTD
         </span>
         <span className="shrink-0">Simply Beyond.</span>
       </div>

@@ -12,7 +12,7 @@ npm ci
 npm run dev -- --port 3003
 ```
 
-Open http://localhost:3003. `/admin` requires a confirmed account listed in server-only `ADMIN_EMAILS`. The designated owner, `ecomcrownsolutions@gmail.com`, has been created and its confirmation verified. Signed-in browser checks passed for orders/returns, products and product editing forms, customers, messages, and the account/profile/address-book page on 12 October 2026. These browser checks were read-only; order mutations were verified separately through database tests.
+Open http://localhost:3003. `/admin` requires a confirmed account listed in server-only `ADMIN_EMAILS`. Keep the existing confirmed owner login in this allowlist; the public support email is configured separately. Signed-in browser checks passed for orders/returns, products and product editing forms, customers, messages, and the account/profile/address-book page on 12 October 2026. These browser checks were read-only; order mutations were verified separately through database tests.
 
 ## Features
 

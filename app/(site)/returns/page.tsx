@@ -6,9 +6,9 @@ export default function Page() {
       <p>Last updated: October 13, 2026</p>
       <h2>Return window</h2>
       <p>
-        CrownHouse, owned and managed by ECOM CROWN (OPC) PVT. LTD, accepts
-        returns of eligible unused items within 14 days of delivery. Items must
-        be in their original condition with all tags attached.
+        CrownHouse, owned and managed by ECOMCROWN SOLUTIONS (OPC) PVT. LTD,
+        accepts returns of eligible unused items within 14 days of delivery.
+        Items must be in their original condition with all tags attached.
       </p>
       <h2>Requesting a return</h2>
       <p>

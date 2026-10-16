@@ -5,9 +5,9 @@ export default function Page() {
     <PolicyPage title="Shipping policy">
       <p>Last updated: October 13, 2026</p>
       <p>
-        At CrownHouse, owned and managed by ECOM CROWN (OPC) PVT. LTD, we aim to
-        deliver your orders safely and efficiently. We currently deliver within
-        India.
+        At CrownHouse, owned and managed by ECOMCROWN SOLUTIONS (OPC) PVT. LTD,
+        we aim to deliver your orders safely and efficiently. We currently
+        deliver within India.
       </p>
       <h2>Order processing</h2>
       <p>

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import BrandMessage from "@/components/brand-message"
 
 import { getProducts } from "@/lib/server/catalog"
 
@@ -19,10 +20,10 @@ export default async function HeroSection() {
           </h1>
         </div>
 
-        <p className="max-w-md text-base leading-6 text-muted-foreground">
+        <BrandMessage>
           Beyond expectations. Beyond anyone else’s rules. Clothing for women
           who define themselves.
-        </p>
+        </BrandMessage>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">

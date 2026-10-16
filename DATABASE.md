@@ -57,7 +57,7 @@ Verify a sending domain in Resend, then set these server-only values in `.env.lo
 ```dotenv
 RESEND_API_KEY=re_your_sending_key
 ORDER_EMAIL_FROM=CrownHouse <orders@your-verified-domain.com>
-ORDER_EMAIL_TO=Ecomcrownsolutions@gmail.com
+ORDER_EMAIL_TO=hello@crownhouse.in
 CRON_SECRET=your_random_secret_at_least_32_characters
 ```
 

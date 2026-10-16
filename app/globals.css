@@ -213,3 +213,8 @@ body { line-height: 1.65; }
  .store-header .header-actions { position: static; justify-content: center; margin-top: 5px; }
  .store-header nav[aria-label="Main navigation"] { gap: 0 18px; }
 }
+
+@keyframes brand-message-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

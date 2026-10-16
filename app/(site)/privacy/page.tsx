@@ -6,12 +6,12 @@ export default function Page() {
       <p>Last updated: October 13, 2026</p>
       <h2>About this policy</h2>
       <p>
-        CrownHouse, owned and managed by ECOM CROWN (OPC) PVT. LTD, operates
-        this website and related shopping services. This policy explains how we
-        collect, use and disclose personal information when you browse, create
-        an account, place an order or contact us. For personal-information
-        handling, this policy takes precedence over conflicting wording in our
-        Terms of Service.
+        CrownHouse, owned and managed by ECOMCROWN SOLUTIONS (OPC) PVT. LTD,
+        operates this website and related shopping services. This policy
+        explains how we collect, use and disclose personal information when you
+        browse, create an account, place an order or contact us. For
+        personal-information handling, this policy takes precedence over
+        conflicting wording in our Terms of Service.
       </p>
       <h2>Information we collect</h2>
       <p>
@@ -100,8 +100,7 @@ export default function Page() {
       <p>
         We may update this policy as our services or practices change and
         publish the revised date here. For privacy questions or requests, email
-        Ecomcrownsolutions@gmail.com, call +917616021755, or write to the
-        address below.
+        hello@crownhouse.in, call +919232133533, or write to the address below.
       </p>
     </PolicyPage>
   )

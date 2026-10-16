@@ -6,10 +6,10 @@ export default function Page() {
       <p>Last updated: October 13, 2026</p>
       <h2>Overview</h2>
       <p>
-        CrownHouse is owned and managed by ECOM CROWN (OPC) PVT. LTD. By
-        accessing or using our website and services, you agree to these Terms of
-        Service. Please read them carefully alongside our privacy, shipping and
-        returns policies.
+        CrownHouse is owned and managed by ECOMCROWN SOLUTIONS (OPC) PVT. LTD.
+        By accessing or using our website and services, you agree to these Terms
+        of Service. Please read them carefully alongside our privacy, shipping
+        and returns policies.
       </p>
       <h2>Eligibility</h2>
       <p>
@@ -74,8 +74,8 @@ export default function Page() {
       </p>
       <h2>Contact</h2>
       <p>
-        For questions about these terms, contact Ecomcrownsolutions@gmail.com or
-        use the phone and address below.
+        For questions about these terms, contact hello@crownhouse.in or use the
+        phone and address below.
       </p>
     </PolicyPage>
   )

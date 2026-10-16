@@ -44,12 +44,12 @@ export async function sendContact(
     await withDatabase((tx) => tx.insert(contactMessages).values(parsed.data))
     return {
       message:
-        "Your message has been saved for our store team. For urgent questions, call +91 76160 21755.",
+        "Your message has been saved for our store team. For urgent questions, call +91 92321 33533.",
     }
   } catch {
     return {
       error:
-        "Unable to save your message. Please email Ecomcrownsolutions@gmail.com or call +91 76160 21755.",
+        "Unable to save your message. Please email hello@crownhouse.in or call +91 92321 33533.",
     }
   }
 }

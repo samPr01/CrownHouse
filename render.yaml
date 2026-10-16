@@ -16,7 +16,7 @@ services:
       - key: CHECKOUT_MODE
         value: cod
       - key: ADMIN_EMAILS
-        value: ecomcrownsolutions@gmail.com
+        sync: false
       - key: RATE_LIMIT_SECRET
         generateValue: true
       - key: APP_URL

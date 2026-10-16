@@ -21,7 +21,7 @@ export default function ErrorPage({
         Try again
       </button>
       <p>
-        <a href="tel:+917616021755">+91 76160 21755</a>
+        <a href="tel:+919232133533">+91 92321 33533</a>
       </p>
     </main>
   )

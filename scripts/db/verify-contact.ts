@@ -8,7 +8,12 @@ try {
   assert.equal(rows.length, 1)
   await client`delete from commerce.contact_messages where id=${rows[0].id}`
   const [admin] =
-    await client`select count(*)::int count from auth.users where lower(email)='ecomcrownsolutions@gmail.com' and email_confirmed_at is not null`
+    await client`select count(*)::int count from auth.users where lower(email) = any(${(
+      process.env.ADMIN_EMAILS || ""
+    )
+      .split(",")
+      .map((email) => email.trim().toLowerCase())
+      .filter(Boolean)}) and email_confirmed_at is not null`
   console.log(
     "Browser contact form persistence verified; only its synthetic test message was removed."
   )
