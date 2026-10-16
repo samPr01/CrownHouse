@@ -19,7 +19,7 @@ export default function AuthForm({mode,next="/account",notice}:{mode:"login"|"re
         {mode!=="forgot" && <label className="block">Password<input name="password" type="password" autoComplete={mode==="login"?"current-password":"new-password"} required minLength={mode==="login"?1:10} maxLength={128} className="mt-2 w-full border p-3"/></label>}
         {mode==="reset" && <label className="block">Confirm password<input name="confirmPassword" type="password" autoComplete="new-password" required minLength={10} maxLength={128} className="mt-2 w-full border p-3"/></label>}
         {state.error && <p role="alert" className="text-red-700">{state.error}</p>}
-        {state.message && <p role="status">{state.message}</p>}
+        {state.message && <p role="status" className={mode === "register" ? "w-full text-center" : undefined}>{state.message}</p>}
         <button disabled={pending} className="w-full bg-foreground px-4 py-3 text-background disabled:opacity-40">{pending?"Please wait…":{login:"Sign in",register:"Create account",forgot:"Send reset link",reset:"Update password"}[mode]}</button>
       </form>
       <div className="flex flex-wrap justify-center gap-5 text-sm underline underline-offset-4">

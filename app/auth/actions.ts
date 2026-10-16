@@ -30,7 +30,7 @@ export async function register(_state:AuthState,form:FormData):Promise<AuthState
     options:{data:{full_name:name},emailRedirectTo:`${process.env.APP_URL}/auth/callback?next=/account`}})
   if(error) return {error:"Unable to register right now. Email delivery may not be configured, or the request limit was reached. Please try again later."}
   if(data.session) redirect("/account")
-  return {message:"If registration is available for this address, you’ll receive an email to confirm your account. Already registered? Sign in instead."}
+  return {message:"Please check & Verify the Link Sent to the email address"}
 }
 export async function forgotPassword(_state:AuthState,form:FormData):Promise<AuthState> {
   const email=emailInput.safeParse(form.get("email"))
