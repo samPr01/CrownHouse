@@ -138,7 +138,7 @@ export function ProductCard({
         <img
           src={image}
           alt={name}
-          className="h-full w-full object-contain object-center p-3"
+          className="h-full w-full object-contain object-center"
         />
       </Link>
       <CardContent className="flex flex-col gap-3 px-1 py-4 text-center sm:text-left">
