@@ -3,7 +3,7 @@ export const metadata = { title: "Shipping policy | CrownHouse" }
 export default function Page() {
   return (
     <PolicyPage title="Shipping policy">
-      <p>Last updated: October 13, 2026</p>
+      <p>Last updated: October 16, 2026</p>
       <p>
         At CrownHouse, owned and managed by ECOMCROWN SOLUTIONS (OPC) PVT. LTD,
         we aim to deliver your orders safely and efficiently. We currently

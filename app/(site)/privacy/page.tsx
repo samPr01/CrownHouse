@@ -3,7 +3,7 @@ export const metadata = { title: "Privacy policy | CrownHouse" }
 export default function Page() {
   return (
     <PolicyPage title="Privacy policy">
-      <p>Last updated: October 13, 2026</p>
+      <p>Last updated: October 16, 2026</p>
       <h2>About this policy</h2>
       <p>
         CrownHouse, owned and managed by ECOMCROWN SOLUTIONS (OPC) PVT. LTD,

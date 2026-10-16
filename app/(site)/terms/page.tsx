@@ -3,7 +3,7 @@ export const metadata = { title: "Terms of service | CrownHouse" }
 export default function Page() {
   return (
     <PolicyPage title="Terms of service">
-      <p>Last updated: October 13, 2026</p>
+      <p>Last updated: October 16, 2026</p>
       <h2>Overview</h2>
       <p>
         CrownHouse is owned and managed by ECOMCROWN SOLUTIONS (OPC) PVT. LTD.
@@ -47,10 +47,10 @@ export default function Page() {
       </p>
       <h2>Intellectual property</h2>
       <p>
-        The CrownHouse name, logos and original website content belong to ECOM
-        CROWN (OPC) PVT. LTD or their respective rights holders. Protected
-        content may not be copied, distributed or used without permission,
-        except as permitted by law.
+        The CrownHouse name, logos and original website content belong to
+        ECOMCROWN SOLUTIONS (OPC) PVT. LTD or their respective rights holders.
+        Protected content may not be copied, distributed or used without
+        permission, except as permitted by law.
       </p>
       <h2>Prohibited use</h2>
       <p>

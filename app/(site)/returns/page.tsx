@@ -3,7 +3,7 @@ export const metadata = { title: "Returns and refunds policy | CrownHouse" }
 export default function Page() {
   return (
     <PolicyPage title="Returns and refunds policy">
-      <p>Last updated: October 13, 2026</p>
+      <p>Last updated: October 16, 2026</p>
       <h2>Return window</h2>
       <p>
         CrownHouse, owned and managed by ECOMCROWN SOLUTIONS (OPC) PVT. LTD,
