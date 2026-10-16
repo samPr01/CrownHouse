@@ -1,9 +1,7 @@
 name: Store health check
 
 on:
-  schedule:
-    # Offset from the start of each hour to reduce scheduling congestion.
-    - cron: "3,13,23,33,43,53 * * * *"
+  # Recurring checks run through cron-job.org; keep this as a manual fallback.
   workflow_dispatch:
   push:
     branches: [main]
