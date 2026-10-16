@@ -1,0 +1,41 @@
+name: Store health check
+
+on:
+  schedule:
+    # Offset from the start of each hour to reduce scheduling congestion.
+    - cron: "3,13,23,33,43,53 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/store-health.yml
+
+permissions: {}
+
+concurrency:
+  group: store-health-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    if: github.repository == 'samPr01/CrownHouse'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check CrownHouse availability
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error \
+            --connect-timeout 20 --max-time 90 \
+            --retry 2 --retry-delay 5 --retry-max-time 240 \
+            --output health.json \
+            https://crownhouse.in/api/health
+          python3 - <<'PY'
+          import json
+          with open("health.json", encoding="utf-8") as response:
+              health = json.load(response)
+          if health.get("status") != "ok":
+              raise SystemExit("CrownHouse did not report healthy status")
+          print("CrownHouse is healthy over HTTPS.")
+          PY
