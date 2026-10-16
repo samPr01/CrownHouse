@@ -166,16 +166,16 @@
 .dark { --primary: #f5f5f0; --primary-foreground: #191919; }
 /* CrownHouse: warm beige, espresso, and readable typography. */
 :root {
- --background: #ffffff; --foreground: #30271f;
+ --background: #f6f1e9; --foreground: #30271f;
  --card: #ffffff; --card-foreground: #30271f;
  --popover: #ffffff; --popover-foreground: #30271f;
  --primary: #4b382b; --primary-foreground: #fffaf2;
- --secondary: #f7f3ed; --secondary-foreground: #30271f;
- --muted: #f6f1e9; --muted-foreground: #675f57;
+ --secondary: #ffffff; --secondary-foreground: #30271f;
+ --muted: #ffffff; --muted-foreground: #675f57;
  --accent: #eee3d4; --accent-foreground: #30271f;
  --border: #e6e0d8; --input: #ded5ca; --ring: #856344;
 }
-/* Beige is reserved for supporting surfaces; the main canvas stays white. */
+/* Beige canvas with white product boxes and supporting surfaces. */
 footer { background-color: var(--secondary); }
 .dark {
  --background: #251e19; --foreground: #f5efe5; --card: #30271f; --card-foreground: #f5efe5;
